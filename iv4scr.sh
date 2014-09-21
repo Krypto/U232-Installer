@@ -146,6 +146,7 @@ mysql -uroot -p -e "CREATE FUNCTION murmur_hash RETURNS INTEGER SONAME 'libmurmu
 clear
 echo -e "${YELLOW}REMEMBER THE PASSWORD YOU INPUT HERE AS YOU WILL NEED IT FOR YOUR CONF FILES LATER!"
 echo -e "IT IS NOT RECOMMENDED TO LEAVE THE PASSWORD BLANK!$CLEAR"
+mysql -uroot -p -e "CREATE USER \"$USERNAME\"@'localhost' IDENTIFIED BY \"$PASS\";CREATE DATABASE $DBNAME;GRANT ALL PRIVILEGES ON $DBNAME . * TO $USERNAME@localhost;FLUSH PRIVILEGES;"
 mysql_secure_installation
 sleep 1
 clear
@@ -299,6 +300,7 @@ chown -R www-data:www-data /var/www
 php5enmod mcrypt
 $STARTPHPFPM
 $STARTNGINX
+clear
 
 echo -e "${YELLOW}Now the biggy, to install xbt so your site can fly...lol
 Time to grab the goodies and put them in root, away from prying eyes. (REMEMBER YOU CAN PUT THIS ANYWHERE YOU WANT)$CLEAR"
@@ -326,7 +328,6 @@ sed -i "s/^mysql_database.*$/mysql_database=$DBNAME/" /root/xbt/Tracker/xbt_trac
 
 cd /root/xbt/Tracker
 ./xbt_tracker
-mysql -uroot -p -e "CREATE USER \"$USERNAME\"@'localhost' IDENTIFIED BY \"$PASS\";CREATE DATABASE $DBNAME;GRANT ALL PRIVILEGES ON $DBNAME . * TO $USERNAME@localhost;FLUSH PRIVILEGES;"
 sleep 3
 clear
 

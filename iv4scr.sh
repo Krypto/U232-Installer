@@ -291,11 +291,6 @@ chmod 777 /var/www/install/extra/ann_config.phpsample.php
 mkdir /var/www/logs
 chmod 777 /var/www/logs
 chmod 777 /var/www/torrents
-
-#set correct permissions
-chown -R $SUDO_USER:$SUDO_USER $USER_HOME
-chown -R www-data:www-data /var/www
-
 clear
 
 echo -e "${YELLOW}Now the biggy, to install xbt so your site can fly...lol
@@ -331,10 +326,18 @@ wget --no-check-certificate https://raw2.github.com/jonnyboy/U232-Installer/mast
 chmod a+x $USER_HOME/check_status.sh
 
 cd /var/www/
-svn checkout https://phpmyadmin.svn.sourceforge.net/svnroot/phpmyadmin/tags/STABLE/phpMyAdmin phpmyadmin
+wget http://downloads.sourceforge.net/project/phpmyadmin/phpMyAdmin/4.2.9/phpMyAdmin-4.2.9-all-languages.tar.gz
+tar -xf phpMyAdmin-4.2.9-all-languages.tar.gz
+mv phpMyAdmin-4.2.9-all-languages phpmyadmin
+rm phpMyAdmin-4.2.9-all-languages.tar.gz
 cd phpmyadmin
 mkdir -p config
 chmod o+rw config
+
+#set correct permissions
+chown -R $SUDO_USER:$SUDO_USER $USER_HOME
+chown -R www-data:www-data /var/www
+
 php5enmod mcrypt
 $STARTPHPFPM
 $STARTNGINX

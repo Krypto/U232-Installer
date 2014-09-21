@@ -341,14 +341,16 @@ $STARTNGINX
 clear
 
 echo -e "${YELLOW}phpMyAdmin has been installed, but needs to be configured.
-Point your browser to http://${IPADDY}/phpmyadmin/setup/ and follow the instructions.
+To complete it's installation, point your browser to http://${IPADDY}/phpmyadmin/setup/
+and follow the instructions.
 
-Now you need to point your browser to http://${IPADDY}/install/
+But, for now you need to point your browser to http://${IPADDY}/install/
 and complete the site installation process.
-When done, remember to rename the install folder to oldinstall.
-Add yourself to site by going to http://${IPADDY} and using the 'Join us' button to create a new user.
-Login using the user you just created. Then, create a second user on with the name System. Ensure it's userid2
-so you dont need to alter the autoshout function on include.
+
+Then, add yourself to the site by going to http://${IPADDY} and using the 'Join us' button to create a new user.
+Login using the user you just created. Then, create a second user with the name 'System'.
+Ensure it's userid2 so you dont need to alter the autoshout function on include.
+
 Sysop is added automatically to the array in cache/staff_settings.php and cache/staff_setting2.php.
 Staff is automatically added to the same 2 files, but you have to make sure the member is offline before you promote them.
 
@@ -360,6 +362,8 @@ Pressy any key to continue:
 " -n 1 -r
 
 echo -e "$CLEAR"
+mv /var/www/install /var/www/installold
+echo -e "${YELLOW}/var/www/install has been moved to /var/www/installold.$CLEAR"
 $USER_HOME/check_status.sh
 
 fi

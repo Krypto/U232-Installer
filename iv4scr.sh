@@ -86,7 +86,7 @@ else
 fi
 echo -e "${YELLOW}We need to give \"$USERNAME\" a password.
 Please enter a password.$CLEAR"
-read PW
+read -s PW
 if [[ $PW == "" ]]; then
 	PASS="admin"
 else
@@ -291,15 +291,11 @@ chmod 777 /var/www/install/extra/ann_config.phpsample.php
 mkdir /var/www/logs
 chmod 777 /var/www/logs
 chmod 777 /var/www/torrents
-clear
 
 #set correct permissions
 chown -R $SUDO_USER:$SUDO_USER $USER_HOME
 chown -R www-data:www-data /var/www
 
-php5enmod mcrypt
-$STARTPHPFPM
-$STARTNGINX
 clear
 
 echo -e "${YELLOW}Now the biggy, to install xbt so your site can fly...lol
@@ -335,13 +331,17 @@ wget --no-check-certificate https://raw2.github.com/jonnyboy/U232-Installer/mast
 chmod a+x $USER_HOME/check_status.sh
 
 cd /var/www/
-sudo svn checkout https://phpmyadmin.svn.sourceforge.net/svnroot/phpmyadmin/tags/STABLE/phpMyAdmin phpmyadmin
-mkdir -p phpmyadmin/config
-chmod o+rw phpmyadmin/config
-
+svn checkout https://phpmyadmin.svn.sourceforge.net/svnroot/phpmyadmin/tags/STABLE/phpMyAdmin phpmyadmin
+cd phpmyadmin
+mkdir -p config
+chmod o+rw config
+php5enmod mcrypt
+$STARTPHPFPM
+$STARTNGINX
 clear
-echo -e "${YELLOW}phpMyAdmin has been install, but needs to be configured.
-Point your browser to http://${IPADDY}/phpmyadmin/scripts/setup.php and follow the instructions.
+
+echo -e "${YELLOW}phpMyAdmin has been installed, but needs to be configured.
+Point your browser to http://${IPADDY}/phpmyadmin/setup/ and follow the instructions.
 
 Now you need to point your browser to http://${IPADDY}/install/
 and complete the site installation process.

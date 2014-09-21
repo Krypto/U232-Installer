@@ -6,8 +6,12 @@ This script has been tested on Ubuntu 14.04 LTS.
 
 To use:
 
-Copy iv4scr.sh to the server that you will be installing to.
-Or,
+```
+wget --no-check-certificate https://raw2.github.com/jonnyboy/U232-Installer/master/iv4scr.sh -O iv4scr.sh
+chmod a+x iv4scr.sh
+sudo ./iv4scr.sh
+```
+Or:
 
 ```
 git clone https://github.com/jonnyboy/U232-Installer.git

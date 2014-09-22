@@ -21,4 +21,4 @@ sudo ./iv4scr.sh
 
 ###TODO  
 * add ssl
-* add smtp mtu
+* add smtp mta

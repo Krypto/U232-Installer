@@ -55,8 +55,8 @@ work providing you follow all the instructions.
 1. This script will install U-232-V4 from
    here >> https://github.com/Bigjoos/U-232-V4/archive/master.zip.
 2. It will unzip it into your www folder.
-3. It will install nginx, percona, php, memcached, opcache and finally but not
-   least xbt.
+3. It will install nginx, percona, php5-fpm, memcached, opcache, fail2ban and
+   finally but not least, xbt.
 4. Dont worry if during this process it says nothing to do, this normally
    indicates you already have the packages installed.
 
@@ -93,6 +93,14 @@ if [[ $DB == "" ]]; then
 else
 	DBNAME=$DB
 fi
+echo -e "${YELLOW}Please enter an email address for fail2ban to send mail to.$CLEAR"
+read MAIL
+if [[ $MAIL == "" ]]; then
+    MAILNAME="$SUDO_USER"
+else
+    MAILNAME=$MAIL
+fi
+
 clear
 
 echo -e "${YELLOW}Updating your system before we begin.$CLEAR"
@@ -201,7 +209,7 @@ sed -i 's/display_startup_errors.*$/display_startup_errors = On/' /etc/php5/fpm/
 sed -i 's/display_startup_errors.*$/display_startup_errors = On/' /etc/php5/cli/php.ini
 
 clear
-echo -e "${YELLOW}And now opcache$CLEAR"
+echo -e "${YELLOW}Installing opcache$CLEAR"
 sleep 2
 pecl install zendopcache-7.0.2
 echo 'zend_extension=/usr/lib/php5/20121212/opcache.so
@@ -211,9 +219,80 @@ opcache.max_accelerated_files=4000
 opcache.revalidate_freq=60
 opcache.fast_shutdown=1
 opcache.enable_cli=1' > /etc/php5/mods-available/opcache.ini
-
 sleep 2
 clear
+
+echo -e "${YELLOW}Installing Fail2Ban (posted by Payaa).$CLEAR"
+apt-get install -yqq fail2ban
+cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+echo "[DEFAULT]
+
+bantime  = 600
+destemail = $MAILNAME
+action = %(action_mwl)s
+
+
+[ssh]
+
+enabled = true
+port    = ssh
+filter  = sshd
+logpath  = /var/log/auth.log
+maxretry = 5
+
+#
+#Nginx configuration
+#
+
+[nginx]
+
+enabled = true
+port    = http,https
+filter  = apache-auth
+logpath = /var/log/nginx*/*error.log
+maxretry = 6
+
+[nginx-noscript]
+
+enabled = false
+port    = http,https
+filter  = apache-noscript
+logpath = /var/log/nginx*/*error.log
+maxretry = 6
+
+[nginx-overflows]
+
+enabled = false
+port    = http,https
+filter  = apache-overflows
+logpath = /var/log/nginx*/*error.log
+maxretry = 2
+
+[apache-badbots]
+
+enabled  = true
+port    = http,http
+filter   = apache-badbots
+logpath  = /var/log/nginx*/*access.log
+bantime  = 172800
+maxretry = 1" > /etc/fail2ban/jail.local
+service fail2ban restart
+sleep 3
+clear
+
+if [ ! -f "/etc/ssl/nginx/conf/server.key" ] || [ ! -f "/etc/ssl/nginx/conf/server.crt" ] || [ ! -f "/etc/ssl/nginx/conf/server.csr" ]; then
+	echo -e "${YELLOW}Create a self-signed ssl certificate.$CLEAR"
+	mkdir -p /etc/ssl/nginx/conf
+	cd /etc/ssl/nginx/conf
+	echo -e "${YELLOW}Enter a Secure password:$CLEAR"
+	openssl genrsa -des3 -out server.key 4096
+	echo -e "${YELLOW}Re-enter a Secure password again:$CLEAR"
+	openssl req -new -key server.key -out server.csr
+	cp server.key server.key.org
+	echo -e "${YELLOW}Re-enter the Secure password one more time:$CLEAR"
+	openssl rsa -in server.key.org -out server.key
+	openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
+fi
 
 unset DEBIAN_FRONTEND
 dpkg-reconfigure tzdata

@@ -9,10 +9,6 @@ if [[ $EUID -ne 0 && whoami != $SUDO_USER ]]; then
 	exit
 fi
 
-STARTXBT='./xbt_tracker'
-STARTMEMCACHED='service memcached restart'
-STARTPHPFPM='service php5-fpm stop;service php5-fpm stop'
-STARTNGINX='service nginx restart'
 UPDATEALL='apt-get -yqq update'
 
 clear
@@ -34,9 +30,7 @@ else
 fi
 clear
 
-echo -e "${YELLOW}
-
-|--------------------------------------------------------------------------|
+echo -e "${YELLOW}|--------------------------------------------------------------------------|
 | https://github.com/Bigjoos/ |
 |--------------------------------------------------------------------------|
 | Licence Info: GPL |
@@ -339,8 +333,9 @@ chown -R $SUDO_USER:$SUDO_USER $USER_HOME
 chown -R www-data:www-data /var/www
 
 php5enmod mcrypt
-$STARTPHPFPM
-$STARTNGINX
+service php5-fpm stop
+service php5-fpm start
+service nginx restart
 clear
 
 echo -e "${YELLOW}phpMyAdmin has been installed, but needs to be configured.
@@ -357,11 +352,9 @@ Ensure it's userid2 so you dont need to alter the autoshout function on include.
 Sysop is added automatically to the array in cache/staff_settings.php and cache/staff_setting2.php.
 Staff is automatically added to the same 2 files, but you have to make sure the member is offline before you promote them.
 
-$USER_HOME/check_status.sh was added to quickly check the status of the required services and restart as necessary.
-
-Once you have completed the above steps:"
+$USER_HOME/check_status.sh was added to quickly check the status of the required services and restart as necessary."
 read -p "
-Pressy any key to continue:
+Once you have completed the above steps, press any key to continue:
 " -n 1 -r
 
 echo -e "$CLEAR"

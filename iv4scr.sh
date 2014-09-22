@@ -52,7 +52,7 @@ All that is needed for this script to WORK is a base server install.
 This has been written and tested for Ubuntu 14.04 DEDICATED SERVERS. It will
 work providing you follow all the instructions.
 
-1. This script will install U-232-V4 from 
+1. This script will install U-232-V4 from
    here >> https://github.com/Bigjoos/U-232-V4/archive/master.zip.
 2. It will unzip it into your www folder.
 3. It will install nginx, percona, php, memcached, opcache and finally but not
@@ -63,7 +63,7 @@ work providing you follow all the instructions.
 This has been made as easy as possible with very little interaction from you
 
 ENTER Y or y to continue:
-$CLEAR" 
+$CLEAR"
 read -p "
 " -n 1 -r
 

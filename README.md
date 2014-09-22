@@ -1,7 +1,7 @@
 U232-Installer
 ==============
 
-A simple bash script to install U232, Percona XtraDB, PHP5-FPM, nginx, phpMyAdmin and dependancies.  
+A simple bash script to install U232, Percona XtraDB, PHP5-FPM, nginx, phpMyAdmin and all dependancies.  
 This script has been tested on Ubuntu 14.04 LTS.
 
 To use:

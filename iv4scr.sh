@@ -204,7 +204,7 @@ clear
 echo -e "${YELLOW}And now opcache$CLEAR"
 sleep 2
 pecl install zendopcache-7.0.2
-echo 'zend_extension=/usr/lib/php5/20100525/opcache.so
+echo 'zend_extension=/usr/lib/php5/20121212/opcache.so
 opcache.memory_consumption=128
 opcache.interned_strings_buffer=8
 opcache.max_accelerated_files=4000
@@ -344,9 +344,15 @@ To complete it's installation, point your browser to http://${IPADDY}/phpmyadmin
 and follow the instructions.
 
 But, for now you need to point your browser to http://${IPADDY}/install/
-and complete the site installation process.
+and complete the site installation process."
+read -p "
+Once you have completed the above steps, press any key to continue:
+" -n 1 -r
+mv /var/www/install /var/www/installold
+echo -e "${YELLOW}/var/www/install has been moved to /var/www/installold.$CLEAR"
+clear
 
-Then, add yourself to the site by going to http://${IPADDY} and using the 'Join us' button to create a new user.
+echo -e "${YELLOW}Then, add yourself to the site by going to http://${IPADDY} and using the 'Join us' button to create a new user.
 Login using the user you just created. Then, create a second user with the name 'System'.
 Ensure it's userid2 so you dont need to alter the autoshout function on include.
 
@@ -359,8 +365,6 @@ Once you have completed the above steps, press any key to continue:
 " -n 1 -r
 
 echo -e "$CLEAR"
-mv /var/www/install /var/www/installold
-echo -e "${YELLOW}/var/www/install has been moved to /var/www/installold.$CLEAR"
 $USER_HOME/check_status.sh
 
 fi

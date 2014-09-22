@@ -1,7 +1,7 @@
 U232-Installer
 ==============
 
-A simple bash script to install U232 and it's dependancies.
+A simple bash script to install U232, Percona XtraDB, PHP5-FPM, nginx, phpMyAdmin and dependancies.
 This script has been tested on Ubuntu 14.04 LTS.
 
 To use:
@@ -18,3 +18,7 @@ git clone https://github.com/jonnyboy/U232-Installer.git
 cd U232-Installer
 sudo ./iv4scr.sh
 ```
+
+TODO
+-add ssl
+-add smtp mtu

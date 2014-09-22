@@ -183,7 +183,7 @@ clear
 echo -e "${YELLOW}Installing PHP, PHP-FPM.$CLEAR"
 apt-get install -yqq php5-fpm
 apt-get install -yqq php5 php5-dev php-pear php5-gd php5-curl php5-memcache php5-json php5-xdebug php5-mysqlnd php5-idn php5-imagick php5-imap php5-mcrypt php5-memcache php5-mhash php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-cgi php5-geoip memcached
-apt-get -yqq install libpcre3 libpcre3-dev unzip
+apt-get -yqq install libpcre3 libpcre3-dev unzip htop tmux
 apt-get -yqq install cmake g++ libboost-date-time-dev libboost-dev libboost-filesystem-dev libboost-program-options-dev libboost-regex-dev libboost-serialization-dev libmysqlclient15-dev make subversion zlib1g-dev
 sed -i 's/max_execution_time.*$/max_execution_time = 180/' /etc/php5/cli/php.ini
 sed -i 's/max_execution_time.*$/max_execution_time = 180/' /etc/php5/fpm/php.ini
@@ -222,6 +222,7 @@ echo -e "${YELLOW}PHP timezone was set to New York, you may wish to change that.
 #get user home folder
 export USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 
+wget --no-check-certificate https://raw.githubusercontent.com/jonnyboy/U232-Installer/master/config/tmux.conf -O $USER_HOME/.tmux.conf
 cp /etc/nanorc $USER_HOME/.nanorc
 sed -i -e 's/^# include/include/' $USER_HOME/.nanorc
 sed -i -e 's/^# set tabsize 8/set tabsize 4/' $USER_HOME/.nanorc

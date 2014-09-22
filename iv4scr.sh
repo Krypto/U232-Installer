@@ -419,19 +419,20 @@ service nginx restart
 clear
 
 echo -e "${YELLOW}phpMyAdmin has been installed, but needs to be configured.
-To complete it's installation, point your browser to http://${IPADDY}/phpmyadmin/setup/
+To complete it's installation, point your browser to http(s)://${IPADDY}/phpmyadmin/setup/
 and follow the instructions.
 
-But, for now you need to point your browser to http://${IPADDY}/install/
+But, for now you need to point your browser to http(s)://${IPADDY}/install/
 and complete the site installation process."
 read -p "
 Once you have completed the above steps, press any key to continue:
 " -n 1 -r
 mv /var/www/install /var/www/installold
-echo -e "${YELLOW}/var/www/install has been moved to /var/www/installold.$CLEAR"
 clear
 
-echo -e "${YELLOW}Then, add yourself to the site by going to http://${IPADDY} and using the 'Join us' button to create a new user.
+echo -e "${YELLOW}/var/www/install has been moved to /var/www/installold.
+
+${YELLOW}Then, add yourself to the site by going to http(s)://${IPADDY} and using the 'Join us' button to create a new user.
 Login using the user you just created. Then, create a second user with the name 'System'.
 Ensure it's userid2 so you dont need to alter the autoshout function on include.
 
@@ -447,4 +448,3 @@ echo -e "$CLEAR"
 $USER_HOME/check_status.sh
 
 fi
-

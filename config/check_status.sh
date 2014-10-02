@@ -13,7 +13,6 @@ STARTXBT='./xbt_tracker'
 STARTMEMCACHED='service memcached restart'
 STARTPHP5FPM='service php5-fpm restart'
 STARTNGINX='service nginx restart'
-UPDATEALL='apt-get -yqq update'
 
 clear
 GREEN="\033[00;32m"

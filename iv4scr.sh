@@ -408,6 +408,9 @@ cd phpmyadmin
 mkdir -p config
 chmod o+rw config
 
+wget http://downloads.sourceforge.net/adminer/adminer-4.1.0-mysql.php -O /var/www/adminer.php
+wget https://raw.github.com/vrana/adminer/master/designs/price/adminer.css -O /var/www/adminer.css
+
 #set correct permissions
 chown -R $SUDO_USER:$SUDO_USER $USER_HOME
 chown -R www-data:www-data /var/www
@@ -419,10 +422,15 @@ service nginx restart
 clear
 
 echo -e "${YELLOW}phpMyAdmin has been installed, but needs to be configured.
-To complete it's installation, point your browser to http(s)://${IPADDY}/phpmyadmin/setup/
+To complete it's installation, point your browser to https://${IPADDY}/phpmyadmin/setup/
 and follow the instructions.
 
-But, for now you need to point your browser to http(s)://${IPADDY}/install/
+I have also included Adminer, https://${IPADDY}/adminer.php
+Adminer, which is a full-featured database management tool written in PHP. Conversely to phpMyAdmin,
+it consist of a single file ready to deploy to the target server. More styles and information can be
+found on their homepage, http://www.adminer.org/
+
+But, for now you need to point your browser to https://${IPADDY}/install/
 and complete the site installation process."
 read -p "
 Once you have completed the above steps, press any key to continue:
@@ -432,7 +440,7 @@ clear
 
 echo -e "${YELLOW}/var/www/install has been moved to /var/www/installold.
 
-${YELLOW}Then, add yourself to the site by going to http(s)://${IPADDY} and using the 'Join us' button to create a new user.
+${YELLOW}Now, add yourself to the site by going to https://${IPADDY} and using the 'Join us' button to create a new user.
 Login using the user you just created. Then, create a second user with the name 'System'.
 Ensure it's userid2 so you dont need to alter the autoshout function on include.
 
